@@ -5,13 +5,13 @@ import FormFramework.validation.Validator;
 import javax.swing.*;
 
 /**
- * Created by Shaun on 4/22/2015.
+ * Created by Brenton on 4/22/2015.
  */
-public class TextField extends JTextField{
+public class ComboBox extends JComboBox {
 
     private Validator validator = null;
 
-    public TextField(){
+    public ComboBox() {
         super();
     }
 
@@ -19,7 +19,7 @@ public class TextField extends JTextField{
         this.validator = val;
     }
 
-    public boolean validateTextField() {
-        return validator == null || validator.validate(getText());
+    public boolean validateComboBox() {
+        return validator == null || validator.validate(getSelectedItem().toString());
     }
 }
