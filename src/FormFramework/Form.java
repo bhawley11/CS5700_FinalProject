@@ -2,7 +2,6 @@ package FormFramework;
 
 import FormFramework.action.*;
 import FormFramework.elements.*;
-import FormFramework.validation.Validator;
 import FormFramework.validation.ValidatorFactory;
 
 import javax.swing.*;
@@ -23,7 +22,8 @@ public class Form extends JDialog implements ActionListener {
         Properties config = loadFormConfig(configFileName);
         setTitle(config.get("form.title").toString());
         setUpElementsFromConfig(config);
-
+        setUpActionFromConfig(config);
+        
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(this);
         add(new JLabel());
@@ -50,7 +50,7 @@ public class Form extends JDialog implements ActionListener {
     private void setUpElementsFromConfig(Properties config) {
         String fieldAmountString = config.get("form.numberOfFields").toString();
         int fieldAmount = Integer.parseInt(fieldAmountString);
-        int validatorAmount = 0;
+        int validatorAmount;
         FormElement ele;
 
         for(int i = 1; i <= fieldAmount; ++i) {
@@ -101,9 +101,13 @@ public class Form extends JDialog implements ActionListener {
         }
     }
 
+    public void setUpActionFromConfig(Properties config) {
+        actionToPerform = ActionHandlerFactory.createAction(config.get("form.action").toString());
+    }
+
     @Override
     public void actionPerformed(ActionEvent e){
-
+        actionToPerform.execute(this);
     }
 
     private boolean validateForm() {
