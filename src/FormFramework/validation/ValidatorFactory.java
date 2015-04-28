@@ -1,11 +1,5 @@
 package FormFramework.validation;
 
-import FormFramework.validation.commonValidation.*;
-import FormFramework.validation.textFieldValidation.*;
-
-/**
- * Created by Brenton on 4/22/2015.
- */
 public class ValidatorFactory {
 
     public static Validator createValidator(String type) {

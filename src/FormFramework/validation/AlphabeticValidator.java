@@ -1,4 +1,4 @@
-package FormFramework.validation.textFieldValidation;
+package FormFramework.validation;
 
 import FormFramework.validation.Validator;
 
