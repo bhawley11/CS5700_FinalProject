@@ -2,11 +2,12 @@ package FormFramework.elements;
 
 import FormFramework.validation.Validator;
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CheckBox extends JCheckBox implements FormElement{
 
-    private List<Validator> validators = null;
+    private List<Validator> validators = new ArrayList<Validator>();
 
     public CheckBox() {
         super();

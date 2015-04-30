@@ -2,9 +2,11 @@ package FormFramework;
 
 import FormFramework.action.*;
 import FormFramework.elements.*;
+import FormFramework.elements.TextField;
 import FormFramework.validation.ValidatorFactory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -16,13 +18,17 @@ import java.util.Properties;
 public class Form extends JDialog implements ActionListener {
 
     private List<FormElement> formElements = new ArrayList<>();
+
     private ActionHandler actionToPerform;
 
     public Form(String configFileName) {
+        setModal(true);
         Properties config = loadFormConfig(configFileName);
-        setTitle(config.get("form.title").toString());
+        setTitle(config.getProperty("form.title"));
         setUpElementsFromConfig(config);
         setUpActionFromConfig(config);
+
+        setLayout(new GridLayout(Integer.parseInt(config.getProperty("form.numberOfFields")) + 1, 2));
         
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(this);
@@ -31,7 +37,7 @@ public class Form extends JDialog implements ActionListener {
 
         pack();
         setSize(400, getSize().height);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     private Properties loadFormConfig(String configFileName) {
@@ -48,48 +54,48 @@ public class Form extends JDialog implements ActionListener {
     }
 
     private void setUpElementsFromConfig(Properties config) {
-        String fieldAmountString = config.get("form.numberOfFields").toString();
+        String fieldAmountString = config.getProperty("form.numberOfFields");
         int fieldAmount = Integer.parseInt(fieldAmountString);
         int validatorAmount;
         FormElement ele;
 
         for(int i = 1; i <= fieldAmount; ++i) {
-            switch(config.get("form.field" + i + ".type").toString()) {
+            switch(config.getProperty("form.field" + i + ".type")) {
                 case "checkbox":
                     ele = new CheckBox();
-                    validatorAmount = Integer.parseInt(config.get("form.field" + i + ".numberOfValidators").toString());
+                    validatorAmount = Integer.parseInt(config.getProperty("form.field" + i + ".numberOfValidators"));
 
                     for(int j = 1; j <= validatorAmount; ++j) {
-                        ele.addValidator(ValidatorFactory.createValidator(config.get("form.field" + i + ".validator" + j).toString()));
+                        ele.addValidator(ValidatorFactory.createValidator(config.getProperty("form.field" + i + ".validator" + j)));
                     }
 
-                    add(new JLabel(config.get("form.field" + i + ".name").toString()));
+                    add(new JLabel(config.getProperty("form.field" + i + ".name")));
                     add((CheckBox) ele);
 
                     break;
 
                 case "combobox":
                     ele = new ComboBox();
-                    validatorAmount = Integer.parseInt(config.get("form.field" + i + ".numberOfValidators").toString());
+                    validatorAmount = Integer.parseInt(config.getProperty("form.field" + i + ".numberOfValidators"));
 
                     for(int j = 1; j <= validatorAmount; ++j) {
-                        ele.addValidator(ValidatorFactory.createValidator(config.get("form.field" + i + ".validator" + j).toString()));
+                        ele.addValidator(ValidatorFactory.createValidator(config.getProperty("form.field" + i + ".validator" + j)));
                     }
 
-                    add(new JLabel(config.get("form.field" + i + ".name").toString()));
+                    add(new JLabel(config.getProperty("form.field" + i + ".name")));
                     add((ComboBox) ele);
 
                     break;
 
                 case "textfield":
                     ele = new TextField();
-                    validatorAmount = Integer.parseInt(config.get("form.field" + i + ".numberOfValidators").toString());
+                    validatorAmount = Integer.parseInt(config.getProperty("form.field" + i + ".numberOfValidators"));
 
                     for(int j = 1; j <= validatorAmount; ++j) {
-                        ele.addValidator(ValidatorFactory.createValidator(config.get("form.field" + i + ".validator" + j).toString()));
+                        ele.addValidator(ValidatorFactory.createValidator(config.getProperty("form.field" + i + ".validator" + j)));
                     }
 
-                    add(new JLabel(config.get("form.field" + i + ".name").toString()));
+                    add(new JLabel(config.getProperty("form.field" + i + ".name")));
                     add((TextField) ele);
 
                     break;
@@ -102,7 +108,7 @@ public class Form extends JDialog implements ActionListener {
     }
 
     public void setUpActionFromConfig(Properties config) {
-        actionToPerform = ActionHandlerFactory.createAction(config.get("form.action").toString());
+        actionToPerform = ActionHandlerFactory.createAction(config.getProperty("form.action"));
     }
 
     @Override
