@@ -30,7 +30,7 @@ public class CheckBox extends JCheckBox implements FormElement{
         if(validators.isEmpty()) return true;
 
         for(Validator v : validators) {
-            if(!v.validate("")) {
+            if(!v.validate("", this)) {
                 allPassed = false;
             }
         }

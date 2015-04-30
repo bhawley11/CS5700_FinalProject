@@ -1,13 +1,25 @@
 package FormFramework.validation;
 
-import FormFramework.validation.Validator;
+import FormFramework.elements.FormElement;
 
-/**
- * Created by Brenton on 4/22/2015.
- */
 public class IntegerRangeValidator implements Validator {
-    @Override
-    public boolean validate(String text) {
-        return true;
+
+    private int min;
+    private int max;
+
+    public IntegerRangeValidator(int min, int max) {
+        this.min = min;
+        this.max = max;
     }
+
+    @Override
+    public boolean validate(String text, FormElement caller) {
+        try {
+            int number = Integer.parseInt(text);
+            return number >= min && number <= max;
+        } catch(NumberFormatException e) {
+            return false;
+        }
+    }
+
 }

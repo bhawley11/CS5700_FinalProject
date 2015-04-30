@@ -11,13 +11,11 @@ public class ValidatorFactory {
             case "integer":
                 return new IntegerValidator();
             case "integer.range":
-                return new IntegerRangeValidator();
+                return new IntegerRangeValidator(0, 0);
             case "length.minimum":
-                return new MinimumLengthValidator();
-            case "required.true":
+                return new MinimumLengthValidator(1);
+            case "required":
                 return new RequiredValidator();
-            case "required.false":
-                return new OptionalValidator();
             default:
                 try {
 
