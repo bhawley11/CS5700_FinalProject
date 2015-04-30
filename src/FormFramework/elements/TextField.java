@@ -29,7 +29,7 @@ public class TextField extends JTextField implements FormElement{
         if(validators.isEmpty()) return true;
 
         for(Validator v : validators) {
-            if(!v.validate(getText())) {
+            if(!v.validate(getText(), this)) {
                 allPassed = false;
             }
         }

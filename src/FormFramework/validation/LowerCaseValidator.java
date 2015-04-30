@@ -1,13 +1,21 @@
 package FormFramework.validation;
 
-import FormFramework.validation.Validator;
+import FormFramework.elements.FormElement;
 
-/**
- * Created by Brenton on 4/22/2015.
- */
 public class LowerCaseValidator implements Validator {
     @Override
-    public boolean validate(String text) {
-        return true;
+    public boolean validate(String text, FormElement caller) {
+        if (text != null && !text.equals("")) {
+            boolean allLower = true;
+            char[] charArray = text.toCharArray();
+
+            for (char c : charArray) {
+                if (c < 'a' || c > 'z') {
+                    allLower = false;
+                }
+            }
+            return allLower;
+        }
+        return false;
     }
 }

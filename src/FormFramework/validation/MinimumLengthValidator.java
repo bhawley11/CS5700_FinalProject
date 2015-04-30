@@ -1,14 +1,18 @@
 package FormFramework.validation;
 
-import FormFramework.validation.Validator;
+import FormFramework.elements.FormElement;
 
-/**
- * Created by Brenton on 4/22/2015.
- */
 public class MinimumLengthValidator implements Validator {
 
+    private int length;
+
+    public MinimumLengthValidator(int length) {
+        this.length = length;
+    }
+
     @Override
-    public boolean validate(String text) {
-        return true;
+    public boolean validate(String text, FormElement caller) {
+        if(text == null) return false;
+        return text.length() >= length;
     }
 }

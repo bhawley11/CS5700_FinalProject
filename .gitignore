@@ -1,3 +1,8 @@
 .idea/
 out/
 *.vpp~*
+/bin/
+.classpath
+.project
+*.eml
+*.userlibraries

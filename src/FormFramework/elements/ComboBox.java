@@ -29,7 +29,7 @@ public class ComboBox extends JComboBox implements FormElement{
         if(validators.isEmpty()) return true;
 
         for(Validator v : validators) {
-            if(!v.validate(getSelectedItem().toString())) {
+            if(!v.validate(getSelectedItem().toString(), this)) {
                 allPassed = false;
             }
         }
