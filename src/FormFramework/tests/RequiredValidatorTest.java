@@ -59,6 +59,6 @@ public class RequiredValidatorTest {
         cb.insertItemAt("notEmpty", 1);
         cb.setSelectedIndex(1);
         cb.addValidator(ValidatorFactory.createValidator("required"));
-        assertFalse(cb.validateElement());
+        assertTrue(cb.validateElement());
     }
 }
