@@ -63,32 +63,33 @@ public class SampleApplication extends JFrame {
             textFieldValues = registerForm.getTextFieldValues();
             comboBoxValues = registerForm.getComboBoxValues();
             checkBoxValues = registerForm.getCheckBoxValues();
-            registerForm.dispose();
-            updateForm();
+            if(!registerForm.isEnabled()){
+                updateForm();
+            }
         }
     }
 
     private void updateForm(){
-        registerButton.setVisible(false);
+            registerButton.setVisible(false);
+            for (Map.Entry<String, String> entry : textFieldValues.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                if (key.equals("name")) {
+                    welcomeLabel.setText("Welcome, " + value);
+                }
+                if (key.equals("age")) {
+                    ageLabel.setText("Age: " + value);
+                }
+            }
+            for (Map.Entry<String, String> entry : checkBoxValues.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                if (key.equals("Accept Terms and Conditions") && value.equals("checked")) {
+                    termsLabel.setText("Accepted Terms and Conditions: YES");
+                }
+            }
+            successfulRegistration.setText("You have registered Successfully!");
 
-        for (Map.Entry<String,String> entry : textFieldValues.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-            if(key.equals("name")){
-                welcomeLabel.setText("Welcome, " + value);
-            }
-            if(key.equals("age")){
-                ageLabel.setText("Age: " + value);
-            }
-        }
-        for(Map.Entry<String,String> entry : checkBoxValues.entrySet()){
-            String key = entry.getKey();
-            String value = entry.getValue();
-            if(key.equals("Accept Terms and Conditions") && value.equals("checked")){
-                termsLabel.setText("Accepted Terms and Conditions: YES");
-            }
-        }
-        successfulRegistration.setText("You have registered Successfully!");
     }
 
     public static void main(String[] args) {

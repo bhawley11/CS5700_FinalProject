@@ -43,7 +43,7 @@ public class Form extends JDialog implements ActionListener {
         pack();
         setSize(400, getSize().height);
         setVisible(true);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     private Properties loadFormConfig(String configFileName) {
