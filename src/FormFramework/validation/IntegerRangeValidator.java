@@ -2,6 +2,8 @@ package FormFramework.validation;
 
 import FormFramework.elements.FormElement;
 
+import javax.swing.*;
+
 public class IntegerRangeValidator implements Validator {
 
     private int min;
@@ -16,10 +18,21 @@ public class IntegerRangeValidator implements Validator {
     public boolean validate(String text, FormElement caller) {
         try {
             int number = Integer.parseInt(text);
-            return number >= min && number <= max;
+            if(number >= min && number <= max) {
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(new JFrame(),
+                        caller.getLabelName() + " must be >= " + min + " and <= " + max + ".",
+                        "Validation Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
         } catch(NumberFormatException e) {
+            JOptionPane.showMessageDialog(new JFrame(),
+                    caller.getLabelName() + " must be a number >= " + min + " and <= " + max + ".",
+                    "Validation Error",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
-
 }

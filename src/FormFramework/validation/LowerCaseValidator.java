@@ -2,6 +2,8 @@ package FormFramework.validation;
 
 import FormFramework.elements.FormElement;
 
+import javax.swing.*;
+
 public class LowerCaseValidator implements Validator {
     @Override
     public boolean validate(String text, FormElement caller) {
@@ -14,8 +16,21 @@ public class LowerCaseValidator implements Validator {
                     allLower = false;
                 }
             }
+
+            if(!allLower) {
+                JOptionPane.showMessageDialog(new JFrame(),
+                        caller.getLabelName() + " must be all lower case.",
+                        "Validation Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
             return allLower;
         }
+
+        JOptionPane.showMessageDialog(new JFrame(),
+                caller.getLabelName() + " must be all lower case.",
+                "Validation Error",
+                JOptionPane.ERROR_MESSAGE);
+
         return false;
     }
 }
