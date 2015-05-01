@@ -79,7 +79,7 @@ public class Form extends JDialog implements ActionListener {
                                 ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1])));
                                 break;
                             case 3:
-                                ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1]), Integer.parseInt(valStrings[1])));
+                                ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1]), Integer.parseInt(valStrings[2])));
                         }
                     }
 
@@ -102,7 +102,7 @@ public class Form extends JDialog implements ActionListener {
                                 ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1])));
                                 break;
                             case 3:
-                                ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1]), Integer.parseInt(valStrings[1])));
+                                ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1]), Integer.parseInt(valStrings[2])));
                         }
                     }
 
@@ -125,7 +125,7 @@ public class Form extends JDialog implements ActionListener {
                                 ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1])));
                                 break;
                             case 3:
-                                ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1]), Integer.parseInt(valStrings[1])));
+                                ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1]), Integer.parseInt(valStrings[2])));
                         }
                         textFieldValues.put(config.getProperty("form.field" + i + ".name"), "" + j);
                     }
