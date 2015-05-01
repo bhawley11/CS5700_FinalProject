@@ -13,26 +13,26 @@ public class IntegerValidatorTest {
 
     @Test
     public void testNumWithAlpha() {
-        assertFalse(val.validate("3a", new TextField()));
+        assertFalse(val.validate("3a", new TextField("test")));
     }
 
     @Test
     public void testNum() {
-        assertTrue(val.validate("3", new TextField()));
+        assertTrue(val.validate("3", new TextField("test")));
     }
 
     @Test
     public void testAlphaOnly() {
-        assertFalse(val.validate("abc", new TextField()));
+        assertFalse(val.validate("abc", new TextField("test")));
     }
 
     @Test
     public void testWhiteSpace() {
-        assertFalse(val.validate("", new TextField()));
+        assertFalse(val.validate("", new TextField("test")));
     }
 
     @Test
     public void testNull() {
-        assertFalse(val.validate(null, new TextField()));
+        assertFalse(val.validate(null, new TextField("test")));
     }
 }

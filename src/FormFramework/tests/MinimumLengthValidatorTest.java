@@ -13,31 +13,31 @@ public class MinimumLengthValidatorTest {
 
     @Test
     public void testMinLength() {
-        assertTrue(val.validate("wor", new TextField()));
+        assertTrue(val.validate("wor", new TextField("test")));
     }
 
     @Test
     public void testOverLength() {
-        assertTrue(val.validate("wordwordword", new TextField()));
+        assertTrue(val.validate("wordwordword", new TextField("test")));
     }
 
     @Test
     public void testJustUnder() {
-        assertFalse(val.validate("wo", new TextField()));
+        assertFalse(val.validate("wo", new TextField("test")));
     }
 
     @Test
     public void testWithNumeric() {
-        assertTrue(val.validate("w0rd", new TextField()));
+        assertTrue(val.validate("w0rd", new TextField("test")));
     }
 
     @Test
     public void testWhitespace() {
-        assertFalse(val.validate("", new TextField()));
+        assertFalse(val.validate("", new TextField("test")));
     }
 
     @Test
     public void testNull() {
-        assertFalse(val.validate(null, new TextField()));
+        assertFalse(val.validate(null, new TextField("test")));
     }
 }
