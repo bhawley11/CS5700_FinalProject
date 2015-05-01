@@ -83,7 +83,7 @@ public class Form extends JDialog implements ActionListener {
                         }
                     }
 
-                    add(new JLabel(config.getProperty("form.field" + i + ".name")));
+                    add(new JLabel(config.getProperty("form.field" + i + ".name").toUpperCase()));
                     add((CheckBox) ele);
 
                     break;
@@ -106,7 +106,7 @@ public class Form extends JDialog implements ActionListener {
                         }
                     }
 
-                    add(new JLabel(config.getProperty("form.field" + i + ".name")));
+                    add(new JLabel(config.getProperty("form.field" + i + ".name").toUpperCase()));
                     add((ComboBox) ele);
 
                     break;
@@ -130,7 +130,7 @@ public class Form extends JDialog implements ActionListener {
                         textFieldValues.put(config.getProperty("form.field" + i + ".name"), "" + j);
                     }
 
-                    add(new JLabel(config.getProperty("form.field" + i + ".name")));
+                    add(new JLabel(config.getProperty("form.field" + i + ".name").toUpperCase()));
                     add((TextField) ele);
 
                     break;
