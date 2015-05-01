@@ -12,7 +12,7 @@ public class RequiredValidatorTest {
 
     @Test
     public void testEmptyCheckBox() {
-        CheckBox cb = new CheckBox();
+        CheckBox cb = new CheckBox("test");
         cb.addValidator(ValidatorFactory.createValidator("required"));
         cb.setSelected(false);
         assertFalse(cb.validateElement());
@@ -20,7 +20,7 @@ public class RequiredValidatorTest {
 
     @Test
     public void testCheckedCheckBox() {
-        CheckBox cb = new CheckBox();
+        CheckBox cb = new CheckBox("test");
         cb.addValidator(ValidatorFactory.createValidator("required"));
         cb.setSelected(true);
         assertTrue(cb.validateElement());
@@ -28,7 +28,7 @@ public class RequiredValidatorTest {
 
     @Test
     public void testEmptyTextField() {
-        TextField tf = new TextField();
+        TextField tf = new TextField("test");
         tf.addValidator(ValidatorFactory.createValidator("required"));
         tf.setText("");
         assertFalse(tf.validateElement());
@@ -36,7 +36,7 @@ public class RequiredValidatorTest {
 
     @Test
     public void testNonEmptyTextField() {
-        TextField tf = new TextField();
+        TextField tf = new TextField("test");
         tf.addValidator(ValidatorFactory.createValidator("required"));
         tf.setText("word");
         assertTrue(tf.validateElement());
@@ -44,7 +44,7 @@ public class RequiredValidatorTest {
 
     @Test
     public void testEmptyComboBox() {
-        ComboBox cb = new ComboBox();
+        ComboBox cb = new ComboBox("test");
         cb.insertItemAt("", 0);
         cb.insertItemAt("notEmpty", 1);
         cb.setSelectedIndex(0);
@@ -54,7 +54,7 @@ public class RequiredValidatorTest {
 
     @Test
     public void testNonEmptyComboBox() {
-        ComboBox cb = new ComboBox();
+        ComboBox cb = new ComboBox("test");
         cb.insertItemAt("", 0);
         cb.insertItemAt("notEmpty", 1);
         cb.setSelectedIndex(1);

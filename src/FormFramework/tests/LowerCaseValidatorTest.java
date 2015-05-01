@@ -13,31 +13,31 @@ public class LowerCaseValidatorTest {
 
     @Test
     public void testAlphaMixedCase() {
-        assertFalse(val.validate("wOrD", new TextField()));
+        assertFalse(val.validate("wOrD", new TextField("test")));
     }
 
     @Test
     public void testAllLower() {
-        assertTrue(val.validate("word", new TextField()));
+        assertTrue(val.validate("word", new TextField("test")));
     }
 
     @Test
     public void testAllUpper() {
-        assertFalse(val.validate("WORD", new TextField()));
+        assertFalse(val.validate("WORD", new TextField("test")));
     }
 
     @Test
     public void testStringWithNum() {
-        assertFalse(val.validate("w0rd", new TextField()));
+        assertFalse(val.validate("w0rd", new TextField("test")));
     }
 
     @Test
     public void testWhiteSpace() {
-        assertFalse(val.validate("", new TextField()));
+        assertFalse(val.validate("", new TextField("test")));
     }
 
     @Test
     public void testNullString() {
-        assertFalse(val.validate(null, new TextField()));
+        assertFalse(val.validate(null, new TextField("test")));
     }
 }
