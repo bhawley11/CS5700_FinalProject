@@ -8,9 +8,11 @@ import java.util.List;
 public class ComboBox extends JComboBox implements FormElement{
 
     private List<Validator> validators = new ArrayList<Validator>();
+    private String label;
 
-    public ComboBox() {
+    public ComboBox(String label) {
         super();
+        this.label = label;
     }
 
     @Override
@@ -36,5 +38,10 @@ public class ComboBox extends JComboBox implements FormElement{
         }
 
         return allPassed;
+    }
+
+    @Override
+    public String getLabelName(){
+        return this.label;
     }
 }

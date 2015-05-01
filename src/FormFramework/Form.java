@@ -64,7 +64,7 @@ public class Form extends JDialog implements ActionListener {
         for(int i = 1; i <= fieldAmount; ++i) {
             switch(config.getProperty("form.field" + i + ".type")) {
                 case "checkbox":
-                    ele = new CheckBox();
+                    ele = new CheckBox(config.getProperty("form.field" + i + ".name"));
                     validatorAmount = Integer.parseInt(config.getProperty("form.field" + i + ".numberOfValidators"));
 
                     for(int j = 1; j <= validatorAmount; ++j) {
@@ -87,7 +87,7 @@ public class Form extends JDialog implements ActionListener {
                     break;
 
                 case "combobox":
-                    ele = new ComboBox();
+                    ele = new ComboBox(config.getProperty("form.field" + i + ".name"));
                     validatorAmount = Integer.parseInt(config.getProperty("form.field" + i + ".numberOfValidators"));
 
                     for(int j = 1; j <= validatorAmount; ++j) {
@@ -110,7 +110,7 @@ public class Form extends JDialog implements ActionListener {
                     break;
 
                 case "textfield":
-                    ele = new TextField();
+                    ele = new TextField(config.getProperty("form.field" + i + ".name"));
                     validatorAmount = Integer.parseInt(config.getProperty("form.field" + i + ".numberOfValidators"));
 
                     for(int j = 1; j <= validatorAmount; ++j) {
