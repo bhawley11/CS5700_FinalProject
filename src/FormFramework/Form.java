@@ -3,6 +3,7 @@ package FormFramework;
 import FormFramework.action.*;
 import FormFramework.elements.*;
 import FormFramework.elements.TextField;
+import FormFramework.validation.Validator;
 import FormFramework.validation.ValidatorFactory;
 
 import javax.swing.*;
@@ -13,6 +14,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 import java.util.List;
+import java.util.Properties;
+import java.util.regex.Pattern;
 
 public class Form extends JDialog implements ActionListener {
 
@@ -63,11 +66,21 @@ public class Form extends JDialog implements ActionListener {
         for(int i = 1; i <= fieldAmount; ++i) {
             switch(config.getProperty("form.field" + i + ".type")) {
                 case "checkbox":
-                    ele = new CheckBox();
+                    ele = new CheckBox(config.getProperty("form.field" + i + ".name"));
                     validatorAmount = Integer.parseInt(config.getProperty("form.field" + i + ".numberOfValidators"));
 
                     for(int j = 1; j <= validatorAmount; ++j) {
-                        ele.addValidator(ValidatorFactory.createValidator(config.getProperty("form.field" + i + ".validator" + j)));
+                        String[] valStrings = config.getProperty("form.field" + i + ".validator" + j).split(Pattern.quote("-"));
+                        switch(valStrings.length) {
+                            case 1:
+                                ele.addValidator(ValidatorFactory.createValidator(valStrings[0]));
+                                break;
+                            case 2:
+                                ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1])));
+                                break;
+                            case 3:
+                                ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1]), Integer.parseInt(valStrings[1])));
+                        }
                     }
 
                     add(new JLabel(config.getProperty("form.field" + i + ".name")));
@@ -76,11 +89,21 @@ public class Form extends JDialog implements ActionListener {
                     break;
 
                 case "combobox":
-                    ele = new ComboBox();
+                    ele = new ComboBox(config.getProperty("form.field" + i + ".name"));
                     validatorAmount = Integer.parseInt(config.getProperty("form.field" + i + ".numberOfValidators"));
 
                     for(int j = 1; j <= validatorAmount; ++j) {
-                        ele.addValidator(ValidatorFactory.createValidator(config.getProperty("form.field" + i + ".validator" + j)));
+                        String[] valStrings = config.getProperty("form.field" + i + ".validator" + j).split(Pattern.quote("-"));
+                        switch(valStrings.length) {
+                            case 1:
+                                ele.addValidator(ValidatorFactory.createValidator(valStrings[0]));
+                                break;
+                            case 2:
+                                ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1])));
+                                break;
+                            case 3:
+                                ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1]), Integer.parseInt(valStrings[1])));
+                        }
                     }
 
                     add(new JLabel(config.getProperty("form.field" + i + ".name")));
@@ -89,10 +112,21 @@ public class Form extends JDialog implements ActionListener {
                     break;
 
                 case "textfield":
-                    ele = new TextField();
+                    ele = new TextField(config.getProperty("form.field" + i + ".name"));
                     validatorAmount = Integer.parseInt(config.getProperty("form.field" + i + ".numberOfValidators"));
 
                     for(int j = 1; j <= validatorAmount; ++j) {
+                        String[] valStrings = config.getProperty("form.field" + i + ".validator" + j).split(Pattern.quote("-"));
+                        switch(valStrings.length) {
+                            case 1:
+                                ele.addValidator(ValidatorFactory.createValidator(valStrings[0]));
+                                break;
+                            case 2:
+                                ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1])));
+                                break;
+                            case 3:
+                                ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1]), Integer.parseInt(valStrings[1])));
+                        }
                         ele.addValidator(ValidatorFactory.createValidator(config.getProperty("form.field" + i + ".validator" + j)));
                         textFieldValues.put(config.getProperty("form.field" + i + ".name"), "" + j);
                     }
