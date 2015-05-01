@@ -21,6 +21,8 @@ public class Form extends JDialog implements ActionListener {
 
     private List<FormElement> formElements = new ArrayList<>();
     private Map<String,String> textFieldValues = new LinkedHashMap<String,String>();
+    private Map<String,String> checkboxValues = new LinkedHashMap<String,String>();
+    private Map<String,String> comboBoxValues = new LinkedHashMap<String,String>();
 
     private ActionHandler actionToPerform;
 
@@ -61,6 +63,10 @@ public class Form extends JDialog implements ActionListener {
         String fieldAmountString = config.getProperty("form.numberOfFields");
         int fieldAmount = Integer.parseInt(fieldAmountString);
         int validatorAmount;
+        int textIndex = 1;
+        int boxIndex = 1;
+        int checkIndex = 1;
+
         FormElement ele;
 
         for(int i = 1; i <= fieldAmount; ++i) {
@@ -81,11 +87,12 @@ public class Form extends JDialog implements ActionListener {
                             case 3:
                                 ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1]), Integer.parseInt(valStrings[2])));
                         }
+                        checkboxValues.put(config.getProperty("form.field" + i + ".name"), "" + checkIndex);
                     }
 
                     add(new JLabel(config.getProperty("form.field" + i + ".name").toUpperCase()));
                     add((CheckBox) ele);
-
+                    checkIndex++;
                     break;
 
                 case "combobox":
@@ -104,11 +111,12 @@ public class Form extends JDialog implements ActionListener {
                             case 3:
                                 ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1]), Integer.parseInt(valStrings[2])));
                         }
+                        comboBoxValues.put(config.getProperty("form.field" + i + ".name"), "" + boxIndex);
                     }
 
                     add(new JLabel(config.getProperty("form.field" + i + ".name").toUpperCase()));
                     add((ComboBox) ele);
-
+                    boxIndex++;
                     break;
 
                 case "textfield":
@@ -127,9 +135,9 @@ public class Form extends JDialog implements ActionListener {
                             case 3:
                                 ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1]), Integer.parseInt(valStrings[2])));
                         }
-                        textFieldValues.put(config.getProperty("form.field" + i + ".name"), "" + j);
+                        textFieldValues.put(config.getProperty("form.field" + i + ".name"), "" + textIndex);
                     }
-
+                    textIndex++;
                     add(new JLabel(config.getProperty("form.field" + i + ".name").toUpperCase()));
                     add((TextField) ele);
 
@@ -139,6 +147,7 @@ public class Form extends JDialog implements ActionListener {
                     return;
             }
             formElements.add(ele);
+
         }
     }
 
@@ -185,13 +194,72 @@ public class Form extends JDialog implements ActionListener {
         return allPassed;
     }
 
+    public Map<String,String> getComboBoxValues(){
+        int count = 1;
+        for(FormElement field : formElements){
+            if(field instanceof ComboBox){
+                for(Map.Entry<String,String> entry : comboBoxValues.entrySet()){
+                    String value = entry.getValue();
+                    int temp;
+                    try{
+                        temp = Integer.parseInt(value);
+                    }
+                    catch(NumberFormatException e){
+                        continue;
+                    }
+                    if(temp == count){
+                        entry.setValue(((ComboBox) field).getSelectedItem().toString());
+                    }
+                }
+                count++;
+            }
+        }
+
+        return comboBoxValues;
+    }
+
+    public Map<String,String> getCheckBoxValues() {
+        int count = 1;
+        for(FormElement field : formElements){
+            if(field instanceof CheckBox){
+                for(Map.Entry<String,String> entry : checkboxValues.entrySet()){
+                    String value = entry.getValue();
+                    int temp;
+                    try{
+                        temp = Integer.parseInt(value);
+                    }
+                    catch(NumberFormatException e){
+                        continue;
+                    }
+                    if(temp == count){
+                        if(((CheckBox) field).isSelected()){
+                            entry.setValue("checked");
+                        }
+                        else{
+                            entry.setValue("unchecked");
+                        }
+                    }
+                }
+                count++;
+            }
+        }
+
+        return checkboxValues;
+    }
+
     public Map<String,String> getTextFieldValues(){
         int count = 1;
         for(FormElement field : formElements){
             if(field instanceof TextField){
                 for (Map.Entry<String,String> entry : textFieldValues.entrySet()) {
                     String value = entry.getValue();
-                    int temp = Integer.parseInt(value);
+                    int temp;
+                    try {
+                        temp = Integer.parseInt(value);
+                    }
+                    catch(NumberFormatException e){
+                        continue;
+                    }
                     if (temp == count){
                         entry.setValue(((TextField) field).getText());
                     }
