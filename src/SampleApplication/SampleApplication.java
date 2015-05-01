@@ -6,30 +6,32 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class SampleApplication extends JFrame {
 
     private Container pane;
+    private Map<String,String> textFieldValues = new LinkedHashMap<String,String>();
 
-    private JButton loginButton,
-                    registerButton;
+    private JButton registerButton;
+
+    private JLabel welcomeLabel;
 
     public SampleApplication(){
         setTitle("Login");
 
         pane = getContentPane();
 
-        pane.setLayout(new GridLayout(2, 2));
+        pane.setLayout(new GridLayout(2, 4));
 
-        loginButton = new JButton("Login");
         registerButton = new JButton("Register");
+        welcomeLabel = new JLabel("Welcome");
 
-
-
-        loginButton.addActionListener(new loginButtonEventHandler());
         registerButton.addActionListener(new registerButtonEventHandler());
 
-        pane.add(loginButton);
+
+        pane.add(welcomeLabel);
         pane.add(registerButton);
 
         pack();
@@ -41,23 +43,26 @@ public class SampleApplication extends JFrame {
 
     private class registerButtonEventHandler implements ActionListener {
         public void actionPerformed(ActionEvent e){
-            JDialog registerForm = new Form("../SampleApplication/config.properties");
-            registerForm.setVisible(true);
+            Form registerForm = new Form("../SampleApplication/config.properties");
+            textFieldValues = registerForm.getTextFieldValues();
+            registerForm.dispose();
+            updateForm();
         }
     }
 
-    private class loginButtonEventHandler implements ActionListener{
-        public void actionPerformed(ActionEvent e){
+    private void updateForm(){
+        registerButton.setVisible(false);
 
+        for (Map.Entry<String,String> entry : textFieldValues.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            if(key.equals("name")){
+                add(new JLabel(value));
+            }
         }
     }
-
-
-
-
 
     public static void main(String[] args) {
         SampleApplication main = new SampleApplication();
-
     }
 }
