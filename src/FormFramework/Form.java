@@ -127,7 +127,6 @@ public class Form extends JDialog implements ActionListener {
                             case 3:
                                 ele.addValidator(ValidatorFactory.createValidator(valStrings[0], Integer.parseInt(valStrings[1]), Integer.parseInt(valStrings[1])));
                         }
-                        ele.addValidator(ValidatorFactory.createValidator(config.getProperty("form.field" + i + ".validator" + j)));
                         textFieldValues.put(config.getProperty("form.field" + i + ".name"), "" + j);
                     }
 
