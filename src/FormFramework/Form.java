@@ -11,13 +11,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Properties;
 
 public class Form extends JDialog implements ActionListener {
 
     private List<FormElement> formElements = new ArrayList<>();
+    private Map<String,String> textFieldValues = new LinkedHashMap<String,String>();
 
     private ActionHandler actionToPerform;
 
@@ -37,6 +37,7 @@ public class Form extends JDialog implements ActionListener {
 
         pack();
         setSize(400, getSize().height);
+        setVisible(true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
@@ -93,6 +94,7 @@ public class Form extends JDialog implements ActionListener {
 
                     for(int j = 1; j <= validatorAmount; ++j) {
                         ele.addValidator(ValidatorFactory.createValidator(config.getProperty("form.field" + i + ".validator" + j)));
+                        textFieldValues.put(config.getProperty("form.field" + i + ".name"), "" + j);
                     }
 
                     add(new JLabel(config.getProperty("form.field" + i + ".name")));
@@ -113,7 +115,9 @@ public class Form extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e){
-        actionToPerform.execute(this);
+        if(validateForm()) {
+            actionToPerform.execute(this);
+        }
     }
 
     private boolean validateForm() {
@@ -121,10 +125,48 @@ public class Form extends JDialog implements ActionListener {
 
         for(FormElement fe : formElements) {
             if(!fe.validateElement()) {
+                if(fe instanceof TextField){
+                    ((TextField) fe).setBackground(Color.red);
+                }
+                if(fe instanceof CheckBox){
+                    ((CheckBox) fe).setBackground(Color.red);
+                }
+                if(fe instanceof ComboBox){
+                    ((ComboBox) fe).setBackground(Color.red);
+                }
                 allPassed = false;
+            }
+            else{
+                if(fe instanceof TextField){
+                    ((TextField) fe).setBackground(Color.green);
+                }
+                if(fe instanceof CheckBox){
+                    ((CheckBox) fe).setBackground(Color.green);
+                }
+                if(fe instanceof ComboBox){
+                    ((ComboBox) fe).setBackground(Color.green);
+                }
             }
         }
 
         return allPassed;
     }
+
+    public Map<String,String> getTextFieldValues(){
+        int count = 1;
+        for(FormElement field : formElements){
+            if(field instanceof TextField){
+                for (Map.Entry<String,String> entry : textFieldValues.entrySet()) {
+                    String value = entry.getValue();
+                    int temp = Integer.parseInt(value);
+                    if (temp == count){
+                        entry.setValue(((TextField) field).getText());
+                    }
+                }
+                count++;
+            }
+        }
+        return textFieldValues;
+    }
+
 }
